@@ -56,7 +56,15 @@ export default function RootLayout() {
           name='index'
           options={{
             title: 'Starter Base',
+            headerShown: false,
             headerRight: () => <ThemeToggle />,
+          }}
+        />
+        <Stack.Screen
+          name='(drawer)'
+          options={{
+            title: 'Drawer',
+            headerShown: false,
           }}
         />
       </Stack>
