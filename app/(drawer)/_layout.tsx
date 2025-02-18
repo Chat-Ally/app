@@ -62,6 +62,12 @@ export default function DrawerLayout() {
                     drawerLabel: "Ajustes",
                     headerShown: true,
                 }} />
+            <Drawer.Screen
+                name="subscripcion"
+                options={{
+                    drawerLabel: "Subscripción",
+                    headerShown: true,
+                }} />
         </Drawer>
     )
 }
