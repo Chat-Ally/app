@@ -1,4 +1,4 @@
-import { View, Text, FlatList } from "react-native";
+import { View, Text, FlatList, Pressable } from "react-native";
 import {Button} from "../../../components/ui/button";
 
 const orders = Array(10).fill({
@@ -10,7 +10,7 @@ const orders = Array(10).fill({
 
 export default function OrdersScreen() {
     return (
-        <View className="flex-1 p-4 bg-white">
+        <Pressable className="flex-1 p-4 bg-white">
             <Text className="text-xl font-bold mb-4">Órdenes</Text>
             <FlatList
                 data={orders}
@@ -26,6 +26,6 @@ export default function OrdersScreen() {
                     </View>
                 )}
             />
-        </View>
+        </Pressable>
     );
 }

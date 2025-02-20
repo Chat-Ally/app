@@ -1,4 +1,4 @@
-import { View, Text, FlatList } from "react-native";
+import { View, Text, FlatList, Pressable } from "react-native";
 
 const conversations = [
     { id: "1", name: "Andrea", time: "Hace 1 min" },
@@ -7,17 +7,31 @@ const conversations = [
 ];
 
 export default function Chats() {
+    const handlePress = (item) => {
+        console.log("Pressed", item.name);
+    };
+
     return (
         <View className="flex-1 p-4 bg-white">
-            <Text className="text-xl font-bold mb-4">Conversaciones</Text>
             <FlatList
                 data={conversations}
                 keyExtractor={(item) => item.id}
                 renderItem={({ item }) => (
-                    <View className="py-2 border-b border-gray-200">
-                        <Text className="text-lg font-semibold">{item.name}</Text>
-                        <Text className="text-gray-500">{item.time}</Text>
-                    </View>
+                    <Pressable
+                        onPress={() => handlePress(item)}
+                        android_ripple={{ color: "#ddd" }} 
+                        style={({ pressed }) => [
+                            {
+                                backgroundColor: pressed ? "#f0f0f0" : "white", 
+                            },
+                            { paddingVertical: 8, borderBottomWidth: 1, borderColor: "#e0e0e0" },
+                        ]}
+                    >
+                        <View>
+                            <Text className="text-lg font-semibold">{item.name}</Text>
+                            <Text className="text-gray-500">{item.time}</Text>
+                        </View>
+                    </Pressable>
                 )}
             />
         </View>

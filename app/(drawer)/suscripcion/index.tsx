@@ -1,4 +1,8 @@
-import { View, Text, Pressable} from "react-native";
+import { View, Pressable} from "react-native";
+import { Card, CardTitle } from "~/components/ui/card";
+
+import { Text } from "~/components/ui/text";
+
 import {useState} from "react"
 
 export default function Suscripción() {
@@ -14,6 +18,7 @@ export default function Suscripción() {
         const fontWeight = isSelected ? "font-bold" : "font-semibold";
 
         return (
+            
             <Pressable
                 key={option}
                 className={`p-4 mb-4 border ${borderColor} rounded-lg`}
@@ -37,6 +42,8 @@ export default function Suscripción() {
 
     return (
         <View className="flex-1 p-4 bg-white">
+                    <Card>
+
             <Text className="text-xl font-bold mb-4">Suscripción</Text>
 
             {renderOption("free", "Gratuito", "Ideal para empezar a vender.", "Gratis", [])}
@@ -54,6 +61,8 @@ export default function Suscripción() {
             <Pressable className="mt-4 bg-blue-500 p-3 rounded-lg">
                 <Text className="text-white text-center">Guardar</Text>
             </Pressable>
+            </Card>
+
         </View>
     );
 }
