@@ -5,7 +5,8 @@ import Svg, { Rect } from "react-native-svg";
 import { GestureHandlerRootView, PanGestureHandler } from "react-native-gesture-handler";
 import Animated, { useSharedValue, useAnimatedStyle, withSpring } from "react-native-reanimated";
 import tinycolor from 'tinycolor2';
-import { Button } from 'react-native-paper'; // Import Button from react-native-paper
+import { Button } from 'react-native-paper';
+
 
 export default function Ecommerce() {
   const [primaryColor, setPrimaryColor] = useState('#F0F0F0');
@@ -18,9 +19,9 @@ export default function Ecommerce() {
 
   // Gesture event handler
   const onGestureEvent = useCallback((event: any) => {
-    let y = Math.max(0, Math.min(event.nativeEvent.translationY, 180)); // Keep within bounds
+    let y = Math.max(0, Math.min(event.nativeEvent.translationY, 100)); // Keep within bounds
     hueY.value = y; // Update vertical position
-    const hue = (y / 480) * 360; // Calculate hue based on vertical position
+    const hue = (y / 100) * 360; // Calculate hue based on vertical position
 
     // Convert HSL to HEX using tinycolor2
     const hexColor = tinycolor({ h: hue, s: 100, l: 50 }).toHexString();
@@ -45,10 +46,10 @@ export default function Ecommerce() {
 
   // Animated style to apply the vertical movement of the slider thumb
   const animatedStyle = useAnimatedStyle(() => {
-    return {
-      transform: [{ translateY: withSpring(hueY.value, { damping: 190, stiffness: 5690 }) }] // smooth transition
-    };
-  });
+  return {
+    transform: [{ translateY: withSpring(hueY.value, { damping: 40, stiffness: 190 }) }] // Transición suave
+  };
+});
 
   // Define styles based on the theme
   const dynamicStyles = StyleSheet.create({
@@ -93,16 +94,16 @@ export default function Ecommerce() {
       width: '100%',
     },
     gradientBox: {
-      width: 200,
-      height: 200,
+      width: 120,
+      height: 120,
       borderTopLeftRadius: 12,
       borderBottomLeftRadius: 12,
       overflow: "hidden",
       marginLeft: 15,
     },
     hueSlider: {
-      width: 40,
-      height: 200,
+      width: 20,
+      height: 120,
       borderTopRightRadius: 12,
       borderBottomRightRadius: 12,
       overflow: "hidden",
@@ -146,22 +147,9 @@ export default function Ecommerce() {
       color: colorScheme === 'dark' ? 'white' : 'black', // Text color adjusts based on theme
     },
     buttonTextSelected: {
-      color: 'white', // Text color for selected button in any theme
-    },
-    sliderContainer: {
-      width: '80%',
-      height: 40,
-      marginTop: 30,
-      justifyContent: 'center',
-      alignItems: 'center',
+      color: 'white dark:text-black', // Text color for selected button in any theme
     },
     
-    sliderTrack: {
-      width: '100%',
-      height: 8,
-      borderRadius: 4,
-      backgroundColor: 'lightgray', // Cambia este color para el track
-    },
    
 
   
@@ -201,7 +189,7 @@ export default function Ecommerce() {
             <PanGestureHandler onGestureEvent={onGestureEvent}>
               <Animated.View style={[dynamicStyles.sliderThumb, animatedStyle]}>
                 <Svg height="40" width="40">
-                  <Rect x="1" y="1" width="38" height="20" rx="10" ry="25" fill={primaryColor} stroke="white" strokeWidth="2" />
+                  <Rect x="1" y="1" width="18" height="20" rx="10" ry="25" fill={primaryColor} stroke="white" strokeWidth="2" />
                 </Svg>
               </Animated.View>
             </PanGestureHandler>
@@ -285,6 +273,8 @@ export default function Ecommerce() {
 
   
 <Text style={[dynamicStyles.subtitle]}>Tamaño</Text>
+
+
 
 
       </ScrollView>

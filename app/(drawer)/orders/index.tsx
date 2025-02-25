@@ -1,30 +1,34 @@
 import { View, Text, FlatList, Pressable } from "react-native";
-import {Button} from "../../../components/ui/button";
+import { Button } from "../../../components/ui/button";
 
-const orders = Array(10).fill({
-    id: Math.random().toString(),
+const orders = Array(10).fill(null).map((_, index) => ({
+    id: index.toString(),  // Usar el índice como identificador único
     date: "1/12/2025",
     amount: "$199.00",
     status: "Exitoso",
-});
+}));
+
 
 export default function OrdersScreen() {
     return (
-        <Pressable className="flex-1 p-4 bg-white">
-            <Text className="text-xl font-bold mb-4">Órdenes</Text>
+        <Pressable className="flex-1 p-4 bg-white dark:bg-black">
+            <Text className="text-xl font-bold mb-4 dark:text-white">Órdenes</Text>
             <FlatList
                 data={orders}
                 keyExtractor={(item) => item.id}
                 renderItem={({ item }) => (
-                    <View className="py-3 border-b border-gray-200 flex-row justify-between items-center">
-                        <Text className="text-lg">{item.date}</Text>
-                        <Text className="font-bold">{item.amount}</Text>
-                        <View className="bg-green-300 px-3 py-1 rounded-full">
+                    <View className="py-3 border-b border-gray-200 flex-row justify-between items-center dark:bg-blue">
+                        <Text className="text-lg dark:text-white">{item.date}</Text>
+                        <Text className="font-bold dark:text-white">{item.amount}</Text>
+                        <View className="bg-green-300 px-3 py-1 rounded-full dark:text-white">
                             <Text className="font-semibold">{item.status}</Text>
                         </View>
-                        <Button> width={24} height={24} color="gray" </Button>
+                        <Button style={{ width: 24, height: 24, backgroundColor: 'gray' }} />
                     </View>
                 )}
+                initialNumToRender={5} // Optimización para el rendimiento
+                maxToRenderPerBatch={5} // Optimización para el rendimiento
+                windowSize={7} // Optimización para el rendimiento
             />
         </Pressable>
     );
