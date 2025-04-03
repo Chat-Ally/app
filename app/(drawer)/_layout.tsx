@@ -1,8 +1,11 @@
 import Drawer from "expo-router/drawer";
+import CustomDrawerContent from "~/components/custom-drawer";
 
 export default function DrawerLayout() {
     return (
-        <Drawer>
+        <Drawer
+            drawerContent={CustomDrawerContent}
+        >
             <Drawer.Screen
                 name="index"
                 options={{
