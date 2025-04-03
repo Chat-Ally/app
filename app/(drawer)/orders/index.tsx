@@ -1,12 +1,18 @@
 import { View, Text, FlatList } from "react-native";
-import {Button} from "../../../components/ui/button";
 
-const orders = Array(10).fill({
+/* const orders = Array(10).fill({
     id: Math.random().toString(),
     date: "1/12/2025",
     amount: "$199.00",
     status: "Exitoso",
-});
+}); */
+
+const orders = [{
+    id: 1,
+    date: "1/2/2023",
+    amount: "$119.00",
+    status: "Exitoso"
+}]
 
 export default function OrdersScreen() {
     return (
@@ -22,7 +28,6 @@ export default function OrdersScreen() {
                         <View className="bg-green-300 px-3 py-1 rounded-full">
                             <Text className="font-semibold">{item.status}</Text>
                         </View>
-                        <Button> width={24} height={24} color="gray" </Button>
                     </View>
                 )}
             />
