@@ -1,23 +1,55 @@
-import { View, Text, FlatList } from "react-native";
+import { Link, useNavigation } from 'expo-router';
+import React, { useEffect, useState } from 'react';
+import { View, FlatList, TouchableOpacity } from 'react-native';
+import { Text } from '~/components/ui/text';
 
-const conversations = [
-    { id: "1", name: "Andrea", time: "Hace 1 min" },
-    { id: "2", name: "Pepe", time: "Hace 2 min" },
-    { id: "3", name: "Pedro", time: "Hace 10 min" },
-];
+interface Chat {
+    id: string;
+    created_at: string;
+    business_id: number;
+    customer_phone_id: number;
+    customer_name?: string | null;
+}
 
 export default function Chats() {
+    const [chats, setChats] = useState<Chat[]>([]);
+    const navigation = useNavigation();
+
+    useEffect(() => {
+        fetchChats();
+    }, []);
+
+    const fetchChats = async () => {
+        try {
+            const response = await fetch(process.env.EXPO_PUBLIC_API_URL + '/chats');
+            const data = await response.json();
+            console.log(data)
+            if (data && data.chats) {
+                setChats(data.chats);
+            }
+        } catch (error) {
+            console.error("Error fetching chats:", error);
+        }
+    };
+
     return (
-        <View className="flex-1 p-4 bg-white">
-            <Text className="text-xl font-bold mb-4">Conversaciones</Text>
+        <View style={{ flex: 1 }}>
+            <Text>Conversaciones</Text>
             <FlatList
-                data={conversations}
+                data={chats}
                 keyExtractor={(item) => item.id}
                 renderItem={({ item }) => (
-                    <View className="py-2 border-b border-gray-200">
-                        <Text className="text-lg font-semibold">{item.name}</Text>
-                        <Text className="text-gray-500">{item.time}</Text>
-                    </View>
+                    <Link
+                        href={{
+                            pathname: '/(drawer)/chats/[id]',
+                            params: { id: item.id }
+                        }}
+                    >
+                        <View>
+                            <Text>{item.customer_name || 'Unknown'}</Text>
+                            <Text>{new Date(item.created_at).toLocaleString()}</Text>
+                        </View>
+                    </Link>
                 )}
             />
         </View>
