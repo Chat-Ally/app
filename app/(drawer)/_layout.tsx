@@ -47,11 +47,11 @@ export default function DrawerLayout() {
                     drawerItemStyle: { display: "none" }
                 }} />
             <Drawer.Screen
-                name="chats/[id]"
+                name="chats/[chatId]"
                 options={{
                     drawerLabel: "Chats",
+                    drawerItemStyle: { display: "none" },
                     headerShown: true,
-                    drawerItemStyle: { display: "none" }
                 }} />
 
             <Drawer.Screen
