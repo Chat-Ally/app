@@ -1,19 +1,38 @@
+import { Link } from 'expo-router';
 import React, { useEffect, useState } from 'react';
 import { View, FlatList } from "react-native";
+import { Card } from '~/components/ui/card';
 import { Text } from "~/components/ui/text";
 import { supabase } from "~/lib/supabase";
 
 export default function OrdersScreen() {
     const [data, setData] = useState<any>([]);
+    const options = { style: 'currency', currency: 'USD' };
+    const formatter = new Intl.NumberFormat('en-US', options);
 
     useEffect(() => {
         const fetchData = async () => {
-            const { data: ordersData, error: fetchError } = await supabase.from("orders").select("*");
-            if (fetchError) {
-                console.error(fetchError);
+            const { data: ordersData, error: ordersError } = await supabase
+                .from("orders")
+                .select(`
+                        id,
+                        created_at,
+                        total,
+                        subtotal,
+                        chats(
+                            customer_name,
+                            phones(
+                                number
+                            )
+                        ),
+                        business_id,
+                        status
+                    `);
+            if (ordersError) {
+                console.error(ordersError);
             }
             if (ordersData) {
-                console.log(ordersData);
+                console.log(JSON.stringify(ordersData));
                 setData(ordersData);
             }
         };
@@ -22,19 +41,35 @@ export default function OrdersScreen() {
     }, []);
 
     return (
-        <View className="flex-1 p-4 ">
-            <Text className="text-xl font-bold mb-4">Órdenes</Text>
+        <View className="flex-1 mx-2 mt-2">
             <FlatList
                 data={data}
                 keyExtractor={(item) => item.id.toString()}
                 renderItem={({ item }) => (
-                    <View className="py-3 border-b border-gray-200 flex-row justify-between items-center">
-                        <Text className="text-lg">{item.created_at}</Text>
-                        <Text className="font-bold">{item.amount}</Text>
-                        <View className="bg-green-300 px-3 py-1 rounded-full">
-                            <Text className="font-semibold">{item.status}</Text>
-                        </View>
-                    </View>
+                    <Link
+                        href={{
+                            pathname: '/(drawer)/orders/[id]',
+                            params: {
+                                id: item.id
+                            }
+                        }}
+                        className="flex-row justify-between items-center mt-2"
+                    >
+                        <Card className='p-2'>
+                            <View className='flex flex-row w-full justify-between'>
+                                <View>
+                                    <Text className="text-3xl font-bold">#{item.id}</Text>
+                                    <Text className="font-bold">{item.chats?.customer_name || item.chats?.phones?.number || 'unkown'}</Text>
+                                </View>
+                                <View className="">
+                                    <Text className="font-semibold text-xs  bg-green-100 px-3 py-1 rounded-full  ">{item.status}</Text>
+                                    <Text className="font-bold">{formatter.format(item.total)}</Text>
+                                </View>
+                            </View>
+                            <Text className="text-lg">{new Date(item.created_at).toLocaleDateString()}</Text>
+                            <Text className="font-bold">{item.amount}</Text>
+                        </Card>
+                    </Link>
                 )}
             />
         </View>
