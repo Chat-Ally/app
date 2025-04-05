@@ -20,6 +20,7 @@ export default function OrdersScreen() {
                         total,
                         subtotal,
                         chats(
+                            id,
                             customer_name,
                             phones(
                                 number
@@ -50,7 +51,12 @@ export default function OrdersScreen() {
                         href={{
                             pathname: '/(drawer)/orders/[id]',
                             params: {
-                                id: item.id
+                                id: item.id,
+                                chat_id: item.chat_id,
+                                customer: item.chats?.customer_name || item.chats?.phones?.number || 'unkown',
+                                date: item.created_at,
+                                total: item.total,
+                                subtotal: item.subtotal,
                             }
                         }}
                         className="flex-row justify-between items-center mt-2"
