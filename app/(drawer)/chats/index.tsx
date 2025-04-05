@@ -57,7 +57,8 @@ export default function Chats() {
                             pathname: '/(drawer)/chats/[chatId]',
                             params: {
                                 chatId: item.id,
-                                phone: item.phones.number
+                                phone: item.phones.number,
+                                name: item.customer_name
                             }
                         }}
                     >
