@@ -1,4 +1,4 @@
-import { Link } from 'expo-router';
+import { Link, useNavigation } from 'expo-router';
 import React, { useEffect, useState } from 'react';
 import { View, FlatList } from "react-native";
 import { Card } from '~/components/ui/card';
@@ -9,6 +9,17 @@ export default function OrdersScreen() {
     const [data, setData] = useState<any>([]);
     const options = { style: 'currency', currency: 'USD' };
     const formatter = new Intl.NumberFormat('en-US', options);
+
+    const navigation = useNavigation()
+
+    useEffect(() => {
+        navigation.setOptions({
+            title: "Ordenes",
+            headerStyle: {
+                elevation: 0
+            }
+        })
+    }, [])
 
     useEffect(() => {
         const fetchData = async () => {
@@ -68,7 +79,7 @@ export default function OrdersScreen() {
                                     <Text className="font-bold">{item.chats?.customer_name || item.chats?.phones?.number || 'unkown'}</Text>
                                 </View>
                                 <View className="">
-                                    <Text className="font-semibold text-xs  bg-green-100 px-3 py-1 rounded-full  ">{item.status}</Text>
+                                    <Text className="font-semibold text-xs  bg-green-100 dark:bg-green-900 px-3 py-1 rounded-full  ">{item.status}</Text>
                                     <Text className="font-bold">{formatter.format(item.total)}</Text>
                                 </View>
                             </View>

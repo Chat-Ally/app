@@ -66,7 +66,7 @@ export default function Chats() {
                 renderItem={({ item }) => (
                     <Link
                         style={{ flex: 1 }}
-                        className='border-b border-gray-200  mt-2 pb-2'
+                        className='border-b border-gray-200 dark:border-gray-800  mt-2 pb-2'
                         href={{
                             pathname: '/(drawer)/chats/[chatId]',
                             params: {

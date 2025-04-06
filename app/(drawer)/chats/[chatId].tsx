@@ -68,8 +68,8 @@ export default function Chat() {
                 keyExtractor={(item) => item.id}
                 renderItem={({ item }) => (
                     <View>
-                        <View className="bg-slate-100 w-fit max-w-sm p-2 rounded-lg m-2">
-                            <Text>{item.query}</Text>
+                        <View className="bg-slate-100 dark:bg-slate-400 w-fit max-w-sm p-2 rounded-lg m-2">
+                            <Text className="dark:text-black">{item.query}</Text>
                         </View>
                         <View className="flex flex-row-reverse rounded-lg">
                             <View className="bg-black text-white w-min max-w-sm rounded-lg p-2 m-2">

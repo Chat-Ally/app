@@ -1,3 +1,5 @@
+import { useNavigation } from "expo-router";
+import { useEffect } from "react";
 import { View } from "react-native";
 import { Card, CardTitle } from "~/components/ui/card";
 import { Text } from "~/components/ui/text";
@@ -19,8 +21,21 @@ function HomeCard({ title, amount, percent }: HomeCardProps) {
 }
 
 export default function HomeScreen() {
+
+
+    const navigation = useNavigation()
+    useEffect(() => {
+        navigation.setOptions({
+            title: "Bienvenido",
+            headerStyle: {
+                elevation: 0
+            }
+        })
+    }, [])
+
+
     return (
-        <View className="gap-4">
+        <View className="mx-2 gap-2">
             <HomeCard title="Ganancias" amount={4822.50} percent={18} />
             <HomeCard title="Conversaciones" amount={1229.90} percent={31} />
             <HomeCard title="Ventas" amount={492.30} percent={22} />
